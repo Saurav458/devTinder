@@ -1,25 +1,31 @@
 const express = require("express");
 
 const app = express();
-
-// we can wrape route handlers  inside array  it will give same output
-//  app.use("/test",[rh1,rh2,rh3,rh4])
-app.use(
-  "/test",
-  (req, res, next) => {
-    // res.send("1stresponse")
-    next();
-  },
-  (req, res, next) => {
-    // res.send("2ndresponse")
-    next();
-  },
-  (req, res) => {
-    res.send("3rdndresponse");
-
-    console.log("outputfinal;")
+// app.get("/test",(req,res,next)=>{
+//     // res.send("2ndresponse")
+//     next()
+// })
+// app.get("/test",(req,res,next)=>{
+//     console.log("1stuser")
+//     // next()
+// })
+const cb0 = function (req, res, next) {
+    console.log('CB0')
+    next()
   }
-);
+  
+  const cb1 = function (req, res, next) {
+    console.log('CB1')
+    next()
+  }
+  
+  const cb2 = function (req, res) {
+    res.send('Hello from C!')
+  }
+  
+  app.get('/test/c', [cb0, cb1, cb2])
+//   app.get('/test/c/:from-:to', [cb0, cb1, cb2])
+
 
 app.listen(3000, () => {
   console.log(`server is listening at port${3000}`);
