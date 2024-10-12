@@ -6,3 +6,5 @@
 - diff b/w app.use and app.all
 
 - middlewares are used to eliminate the redundancy of code ex- to check whether user is authorised or not
+
+-  write a dummy auth middlewares for all user routes except  /user/login routes
