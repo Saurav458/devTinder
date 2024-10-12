@@ -1,13 +1,26 @@
 const express = require("express");
 
-const app=express()
+const app = express();
 
-// this will match all the http methods with same endpoint because it is generic
-app.use("/test/:userId/:password/:name",(req,res)=>{
-    console.log(req.params)
-    console.log("8re.query",req.query)
-     res.send( "hello from server123")
-})
-app.listen(3000,()=>{
-    console.log(`server is listening at port${3000}`)
-})
+// we can wrape route handlers  inside array  it will give same output
+//  app.use("/test",[rh1,rh2,rh3,rh4])
+app.use(
+  "/test",
+  (req, res, next) => {
+    // res.send("1stresponse")
+    next();
+  },
+  (req, res, next) => {
+    // res.send("2ndresponse")
+    next();
+  },
+  (req, res) => {
+    res.send("3rdndresponse");
+
+    console.log("outputfinal;")
+  }
+);
+
+app.listen(3000, () => {
+  console.log(`server is listening at port${3000}`);
+});
