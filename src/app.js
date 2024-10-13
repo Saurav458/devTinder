@@ -1,23 +1,21 @@
 const express = require("express");
-const {adminAuth,userAuth}=require("./middlewares/auth")
+const connectDb = require("./config/database");
 const app = express();
 
-app.use("/admin",adminAuth );
 
-app.get("/user/data",userAuth,(req,res)=>{
-    res.send("all user data sent")
-})
-app.get("/user/login",(req,res)=>{
-    res.send("user is logigin")
-})
-app.get("/admin/getData", (req, res) => {
-  res.send("All data sent");
-});
+const connectionDb=async()=>{
+    try{
+        const result=await connectDb()
+        if(result){
+            console.log("database connected successfully")
+            app.listen(7777,()=>{
+                console.log(`server is listening at port{7777}`)
+            })
+        }
+    }catch(err){
+        console.log(err.message)
+    }
+   
+}
+connectionDb()
 
-app.delete("/admin/getData", (req, res) => {
-  res.send("user is deleted");
-});
-
-app.listen(3000, () => {
-  console.log(`server is listening at port${3000}`);
-});
